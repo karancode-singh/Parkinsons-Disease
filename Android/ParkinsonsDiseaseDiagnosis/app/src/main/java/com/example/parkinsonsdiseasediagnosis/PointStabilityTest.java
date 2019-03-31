@@ -176,10 +176,10 @@ public class PointStabilityTest extends Activity {
                     finalList.addAll(list);
                     Log.d("qwe",finalList.size()+"");
                     submit(finalList);
-                    Intent i = new Intent(PointStabilityTest.this,Result.class);
-                    startActivity(i);
-                    dialog.dismiss();
-                    finish();
+//                    Intent i = new Intent(PointStabilityTest.this,Result.class);
+//                    startActivity(i);
+//                    dialog.dismiss();
+//                    finish();
                 }
             });
 
@@ -228,11 +228,49 @@ public class PointStabilityTest extends Activity {
                 @Override
                 public void onResponse(String response) {
                     Log.i("VOLLEY", response);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PointStabilityTest.this);
+                    builder.setMessage("Results!")
+                            .setTitle(response);
+                    builder.setPositiveButton("Do-Over", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent i = new Intent(PointStabilityTest.this, MainActivity.class);
+                            startActivity(i);
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+                    builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    builder.show();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Log.e("VOLLEY", error.toString());
+                    AlertDialog.Builder builder = new AlertDialog.Builder(PointStabilityTest.this);
+                    builder.setMessage("Some error on server. Try again.")
+                            .setTitle("Error!");
+                    builder.setPositiveButton("Do-Over", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent i = new Intent(PointStabilityTest.this, MainActivity.class);
+                            startActivity(i);
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+                    builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+                    builder.show();
                 }
             }) {
                 @Override
