@@ -30,3 +30,7 @@ We have referred to the following paper for the calculation of the DAH Score.
 ## How to use the Android App?
  - [1] Clone the repository
  - [2] Emulate/Run on your device using Android Studio.
+ 
+---
+Note that the app doesn't utilises any database/model as of now*
+
