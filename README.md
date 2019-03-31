@@ -15,8 +15,11 @@ The test also saves a lot of useful time and money that would be otherwise waste
 The repository consists of a standalone Android app and a Pygame based Application that provides an intuitive UI for the user to give the test.
 The AI analysis is done on the basis of a mathematical test that calculates a score which provides the probability function of the Parkinsonism Symptom.
 We have referred to the following paper for the calculation of the DAH Score.
+
 [Link to the paper](https://www.researchgate.net/profile/Muhammed_Isenkul/publication/291814924_Improved_Spiral_Test_Using_Digitized_Graphics_Tablet_for_Monitoring_Parkinson's_Disease/links/56a6211408ae2c689d39d821/Improved-Spiral-Test-Using-Digitized-Graphics-Tablet-for-Monitoring-Parkinsons-Disease.pdf)
+
 ---
+
 ## How to use the Pygame App?
  - [1] Install pygame:
  ```python
@@ -30,3 +33,7 @@ We have referred to the following paper for the calculation of the DAH Score.
 ## How to use the Android App?
  - [1] Clone the repository
  - [2] Emulate/Run on your device using Android Studio.
+ 
+---
+Note that the app doesn't utilises any dataset/model as of now*
+

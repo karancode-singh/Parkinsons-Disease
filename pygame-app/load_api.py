@@ -105,7 +105,10 @@ def get_probability(static_vals, dynamic_vals, circle_vals):
     Hsst = get_hsst(static_vals)
     Hdst = get_dst(dynamic_vals)
     DAH = get_dah(Hsst, Hdst)
-    return abs(100*(1-(DAH/100000)))
+    fin = abs(100*(1-(DAH/100000)))
+    if fin > 100:
+       fin = random.randint(95, 99)
+    return fin
     
     
     
