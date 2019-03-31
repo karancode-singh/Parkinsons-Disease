@@ -123,13 +123,13 @@ public class Flickering extends Activity {
             Double r = new Double((int)(W/30));
             Double theta = new Double(0);
             Double count = new Double(0);
-            while (count <100) {
+            while (count <110) {
                 x = (int)(W / 2 + r * Math.cos(Math.PI * theta / 180));
                 y = (int)(H / 2 - r * Math.sin(Math.PI * theta / 180));
                 if(x>=W || y>H)
                     continue;
                 mCanvas1.drawCircle(x,y,15,p);
-                r += 0.4;
+                r += 0.38;
                 count += 0.09;
                 theta += 0.9;
             }
@@ -178,13 +178,13 @@ public class Flickering extends Activity {
                 Double r = new Double((int)(W/30));
                 Double theta = new Double(0);
                 Double count = new Double(0);
-                while (count <100) {
+                while (count <110) {
                     X = (int)(W / 2 + r * Math.cos(Math.PI * theta / 180));
                     Y = (int)(H / 2 - r * Math.sin(Math.PI * theta / 180));
                     if(x>=W || y>H)
                         continue;
                     mCanvas1.drawCircle(X,Y,15,p);
-                    r += 0.4;
+                    r += 0.38;
                     count += 0.09;
                     theta += 0.9;
                 }
@@ -199,13 +199,13 @@ public class Flickering extends Activity {
                 Double r = new Double((int)(W/30));
                 Double theta = new Double(0);
                 Double count = new Double(0);
-                while (count <100) {
+                while (count <110) {
                     X = (int)(W / 2 + r * Math.cos(Math.PI * theta / 180));
                     Y = (int)(H / 2 - r * Math.sin(Math.PI * theta / 180));
                     if(x>=W || y>H)
                         continue;
                     mCanvas1.drawCircle(X,Y,15,p);
-                    r += 0.4;
+                    r += 0.38;
                     count += 0.09;
                     theta += 0.9;
                 }
@@ -226,12 +226,13 @@ public class Flickering extends Activity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     Log.d("qwe",staticList.size()+"");
-                    staticList.addAll(list);
-                    Log.d("qwe",staticList.size()+"");
+//                    staticList.addAll(list);
+//                    Log.d("qwe",staticList.size()+"");
 //                    for(float[] i : staticList)
 //                        Log.d("qwe",i.toString());
                     Intent i = new Intent(Flickering.this,PointStabilityTest.class);
-                    i.putExtra("staticDynamic",staticList);
+                    i.putExtra("static",staticList);
+                    i.putExtra("dynamic",list);
                     startActivity(i);
                     dialog.dismiss();
                     finish();

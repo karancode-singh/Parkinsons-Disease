@@ -93,13 +93,13 @@ public class MainActivity extends Activity {
             Double r = new Double((int)(W/30));
             Double theta = new Double(0);
             Double count = new Double(0);
-            while (count <100) {
+            while (count <110) {
                 X = (int)(W / 2 + r * Math.cos(Math.PI * theta / 180));
                 Y = (int)(H / 2 - r * Math.sin(Math.PI * theta / 180));
                 if(X>=W || Y>H)
                     continue;
                 mCanvas.drawCircle(X,Y,15,p);
-                r += 0.4;
+                r += 0.38;
                 count += 0.09;
                 theta += 0.9;
             }

@@ -59,13 +59,15 @@ public class PointStabilityTest extends Activity {
     private RequestQueue mRequestQueue;
     private StringRequest stringRequest;
 
-    ArrayList<float[]> staticDynamicList;
+    ArrayList<float[]> staticList;
+    ArrayList<float[]> dynamicList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         dv = new DrawingView(this);
-        staticDynamicList = (ArrayList<float[]>) getIntent().getExtras().getSerializable("staticDynamic");
+        staticList = (ArrayList<float[]>) getIntent().getExtras().getSerializable("static");
+        dynamicList = (ArrayList<float[]>) getIntent().getExtras().getSerializable("dynamic");
         setContentView(dv);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -119,7 +121,7 @@ public class PointStabilityTest extends Activity {
             Log.d("YO",w+","+h);
             int W = mBitmap.getWidth();
             int H = mBitmap.getHeight();
-            mCanvas1.drawCircle(W/2,H/2,15,p);
+            mCanvas1.drawCircle(W/2,H/2,50,p);
         }
 
         @Override
@@ -169,13 +171,13 @@ public class PointStabilityTest extends Activity {
             builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    ArrayList<float[]> finalList = new ArrayList<>();
-                    Log.d("qwe",staticDynamicList.size()+"");
-                    Log.d("qwe",list.size()+"");
-                    finalList.addAll(staticDynamicList);
-                    finalList.addAll(list);
-                    Log.d("qwe",finalList.size()+"");
-                    submit(finalList);
+//                    ArrayList<float[]> finalList = new ArrayList<>();
+//                    Log.d("qwe",staticDynamicList.size()+"");
+//                    Log.d("qwe",list.size()+"");
+//                    finalList.addAll(staticDynamicList);
+//                    finalList.addAll(list);
+//                    Log.d("qwe",finalList.size()+"");
+                    submit();
 //                    Intent i = new Intent(PointStabilityTest.this,Result.class);
 //                    startActivity(i);
 //                    dialog.dismiss();
@@ -220,7 +222,7 @@ public class PointStabilityTest extends Activity {
         }
     }
 
-    private void submit(final ArrayList<float[]> finalList) {
+    private void submit() {
         try {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             String URL = "http://192.168.43.205:5000";
@@ -229,8 +231,8 @@ public class PointStabilityTest extends Activity {
                 public void onResponse(String response) {
                     Log.i("VOLLEY", response);
                     AlertDialog.Builder builder = new AlertDialog.Builder(PointStabilityTest.this);
-                    builder.setMessage("Results!")
-                            .setTitle(response);
+                    builder.setMessage(response)
+                            .setTitle("Results are here!");
                     builder.setPositiveButton("Do-Over", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -240,9 +242,12 @@ public class PointStabilityTest extends Activity {
                             finish();
                         }
                     });
-                    builder.setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                    builder.setPositiveButton("Do-Over", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            Intent i = new Intent(PointStabilityTest.this, MainActivity.class);
+                            startActivity(i);
+                            dialog.dismiss();
                             finish();
                         }
                     });
@@ -275,19 +280,48 @@ public class PointStabilityTest extends Activity {
             }) {
                 @Override
                 protected Map<String,String> getParams(){
-                    String data = "[";
-                    int n = finalList.size();
-                    for(int i=0; i<n; i++) {
-                        data += "[";
-                        data += finalList.get(i)[0]+","+finalList.get(i)[1]+","+finalList.get(i)[2];
-                        if(i==n-1)
-                            data += "]";
+                    int X = 1080;
+                    int Y = 2097;
+                    int x = 1400;
+                    int y = 800;
+
+                    String data1 = "[";
+                    String data2 = "[";
+                    String data3 = "[";
+                    int n1 = staticList.size();
+                    int n2 = dynamicList.size();
+                    int n3 = list.size();
+                    for(int i=0; i<n1; i++) {
+                        data1 += "[";
+                        data1 += (staticList.get(i)[0]/X)*x+","+(staticList.get(i)[1]/Y)*y+",0,"+staticList.get(i)[2];
+                        if(i==n1-1)
+                            data1 += "]";
                         else
-                            data += "],";
+                            data1 += "],";
                     }
-                    data += "]";
+                    data1 += "]";
+                    for(int i=0; i<n2; i++) {
+                        data2 += "[";
+                        data2 += (dynamicList.get(i)[0]/X)*x+","+(dynamicList.get(i)[1]/Y)*y+",0,"+dynamicList.get(i)[2];
+                        if(i==n2-1)
+                            data2 += "]";
+                        else
+                            data2 += "],";
+                    }
+                    data2 += "]";
+                    for(int i=0; i<n2; i++) {
+                        data3 += "[";
+                        data3 += (dynamicList.get(i)[0]/X)*x+","+(dynamicList.get(i)[1]/Y)*y+",0,"+dynamicList.get(i)[2];
+                        if(i==n2-1)
+                            data3 += "]";
+                        else
+                            data3 += "],";
+                    }
+                    data3 += "]";
                     Map<String,String> params = new HashMap<String, String>();
-                    params.put("data",data);
+                    params.put("data1",data1);
+                    params.put("data2",data2);
+                    params.put("data3",data3);
                     return params;
                 }
 
